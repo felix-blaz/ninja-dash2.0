@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class moveBack : MonoBehaviour
 {
-    private float speed = 20;
+    public float speed = 20;
     // Start is called before the first frame update
     void Start()
     {
