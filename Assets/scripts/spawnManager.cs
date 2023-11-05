@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class spawnManager : MonoBehaviour
 {
-    public GameObject obsticlePrefab;
-    private Vector3 spawnPosition = new Vector3(0, 1, 50);
+   
+    public GameObject[] obsticlePrefab;
+   
     private float startDelay = 1;
-    private float repeat = 2;
+    private float repeat = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,20 @@ public class spawnManager : MonoBehaviour
     }
     public void spawnObs()
     {
-        Instantiate(obsticlePrefab, spawnPosition, obsticlePrefab.transform.rotation);
+        int index = Random.Range(0, 3);
+        int[] possibleV = new int[] { -3, 0, 3 };
+        int randPosx = possibleV[index];
+
+        Vector3 spawnPosition = new Vector3(randPosx, 1, 50);
+        Vector3 spawnPositionFire = new Vector3(randPosx, 4, 50);
+
+        if (index == 1)
+        {
+            Instantiate(obsticlePrefab[1], spawnPositionFire, obsticlePrefab[1].transform.rotation);
+        }
+        else
+        {
+            Instantiate(obsticlePrefab[index], spawnPosition, obsticlePrefab[index].transform.rotation);
+        }
     }
 }
