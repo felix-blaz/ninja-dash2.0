@@ -14,6 +14,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float gravityModifier;
     public bool onGround = true;
     public float xbounds = 4;
+  
 
     // Start is called before the first frame update
     void Start()
@@ -127,6 +128,6 @@ public class NewBehaviourScript : MonoBehaviour
         onGround =  true; 
     }
 
-
+   
 
 }

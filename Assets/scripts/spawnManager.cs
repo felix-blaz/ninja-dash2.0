@@ -9,6 +9,7 @@ public class spawnManager : MonoBehaviour
    
     private float startDelay = 1;
     private float repeat = 1;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -23,20 +24,51 @@ public class spawnManager : MonoBehaviour
     }
     public void spawnObs()
     {
-        int index = Random.Range(0, 3);
-        int[] possibleV = new int[] { -3, 0, 3 };
-        int randPosx = possibleV[index];
+        int prefabIndex = Random.Range(0, 4);
+        int index = Random.Range(0, 8);
 
-        Vector3 spawnPosition = new Vector3(randPosx, 1, 50);
-        Vector3 spawnPositionFire = new Vector3(randPosx, 4, 50);
-
-        if (index == 1)
+        int result;
+        if (index <3)
         {
-            Instantiate(obsticlePrefab[1], spawnPositionFire, obsticlePrefab[1].transform.rotation);
+            result = -4;    // 1 of 3 chance
+        }
+        else if(index <6) 
+        {
+            result = 4;     // 1 of 3 chance
         }
         else
         {
-            Instantiate(obsticlePrefab[index], spawnPosition, obsticlePrefab[index].transform.rotation);
+            result = 0;     // 1 of 3 chance
+        }
+
+
+
+       // int[] possibleV = new int[] { -4, 0, 4 };
+       // int randPosx = possibleV[index];
+
+        Vector3 spawnPosition = new Vector3(result, 1, 50);
+        Vector3 spawnPositionFire = new Vector3(result, 3, 50);
+        Vector3 spawnPositionKuni = new Vector3(result, 1, 50);
+        Vector3 spawnPositionTree = new Vector3(result, -1, 50);
+
+        if (prefabIndex == 1)
+        {
+            Instantiate(obsticlePrefab[1], spawnPositionFire, obsticlePrefab[1].transform.rotation);
+        }
+        else if(prefabIndex == 0)
+        {
+            Instantiate(obsticlePrefab[0], spawnPositionTree, obsticlePrefab[0].transform.rotation);
+
+        }
+        else if (prefabIndex == 3)
+        {
+            Instantiate(obsticlePrefab[3], spawnPositionKuni, obsticlePrefab[3].transform.rotation);
+
+        }
+
+        else
+        {
+            Instantiate(obsticlePrefab[prefabIndex], spawnPosition, obsticlePrefab[prefabIndex].transform.rotation);
         }
     }
 }
