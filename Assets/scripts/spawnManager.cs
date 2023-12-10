@@ -9,12 +9,16 @@ public class spawnManager : MonoBehaviour
    
     private float startDelay = 1;
     private float repeat = 1;
-   
+    private int lastResult;
+    private bool spawnRateChanged = false;
 
     // Start is called before the first frame update
+
+
     void Start()
     {
-       InvokeRepeating("spawnObs", startDelay, repeat);
+        
+        InvokeRepeating("spawnObs", startDelay, repeat);
     }
 
     // Update is called once per frame
@@ -22,53 +26,101 @@ public class spawnManager : MonoBehaviour
     {
         
     }
+
+    // Function to be called when you want to apply slowdown
+    public void slowDownTime()
+    {
+        if (spawnRateChanged == false)
+        {
+            CancelInvoke("spawnObs");
+            spawnRateChanged = true;
+            InvokeRepeating("spawnObs", startDelay, 3); // Start repeating with the new rate
+        }
+    }
+
+    // Function to be called when you want to reset the spawn rate
+    public void ResetSpawnRate()
+    {
+        if (spawnRateChanged ==true )
+        {
+           CancelInvoke("spawnObs");
+            InvokeRepeating("spawnObs", startDelay, repeat);
+            spawnRateChanged = false;
+        }
+       
+    }
+
+
+
     public void spawnObs()
     {
-        int prefabIndex = Random.Range(0, 4);
-        int index = Random.Range(0, 8);
+        int prefabIndex = Random.Range(0, 100);
+        int index = Random.Range(0, 3);
 
+        // spawn location on the x axixs
         int result;
-        if (index <3)
+        while (true)
         {
-            result = -4;    // 1 of 3 chance
+            index = Random.Range(0, 3);
+
+            if (index == 0)
+            {
+                result = -4;
+            }
+            else if (index == 1)
+            {
+                result = 4;
+            }
+            else
+            {
+                result = 0;
+            }
+
+            if (result != lastResult)
+                break;
         }
-        else if(index <6) 
-        {
-            result = 4;     // 1 of 3 chance
-        }
-        else
-        {
-            result = 0;     // 1 of 3 chance
-        }
+
+        lastResult = result;
 
 
+        // int[] possibleV = new int[] { -4, 0, 4 };
+        // int randPosx = possibleV[index];
 
-       // int[] possibleV = new int[] { -4, 0, 4 };
-       // int randPosx = possibleV[index];
-
-        Vector3 spawnPosition = new Vector3(result, 1, 50);
+        Vector3 spawnPositionLog = new Vector3(result, 1, 50);
         Vector3 spawnPositionFire = new Vector3(result, 3, 50);
         Vector3 spawnPositionKuni = new Vector3(result, 1, 50);
         Vector3 spawnPositionTree = new Vector3(result, -1, 50);
+        Vector3 spawnPositionIzanagi = new Vector3(result, -1, 50);
 
-        if (prefabIndex == 1)
+        if (prefabIndex <= 29)
         {
             Instantiate(obsticlePrefab[1], spawnPositionFire, obsticlePrefab[1].transform.rotation);
         }
-        else if(prefabIndex == 0)
+        else if(prefabIndex >= 30 && prefabIndex <60)
         {
             Instantiate(obsticlePrefab[0], spawnPositionTree, obsticlePrefab[0].transform.rotation);
 
         }
-        else if (prefabIndex == 3)
+        else if (prefabIndex >= 60 && prefabIndex < 90)
+        {
+            Instantiate(obsticlePrefab[2], spawnPositionLog, obsticlePrefab[2].transform.rotation);
+
+        }
+
+        //10% chance for power up to spa
+        else if(prefabIndex >= 90 && prefabIndex <95)
+           
         {
             Instantiate(obsticlePrefab[3], spawnPositionKuni, obsticlePrefab[3].transform.rotation);
-
+            // Instantiate(obsticlePrefab[prefabIndex], spawnPositionLog, obsticlePrefab[prefabIndex].transform.rotation);
         }
-
-        else
+        else if (prefabIndex >= 95)
         {
-            Instantiate(obsticlePrefab[prefabIndex], spawnPosition, obsticlePrefab[prefabIndex].transform.rotation);
+            Instantiate(obsticlePrefab[4], spawnPositionKuni, obsticlePrefab[4].transform.rotation);
         }
     }
+
+
+
+
 }
