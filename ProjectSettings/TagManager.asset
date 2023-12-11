@@ -6,6 +6,7 @@ TagManager:
   tags:
   - powerup1
   - izanagiPowerUp
+  - coin
   layers:
   - Default
   - TransparentFX

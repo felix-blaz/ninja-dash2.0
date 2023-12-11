@@ -6,6 +6,7 @@ public class spawnManager : MonoBehaviour
 {
    
     public GameObject[] obsticlePrefab;
+    public GameObject collectablePrefab;
    
     private float startDelay = 1;
     private float repeat = 1;
@@ -19,6 +20,7 @@ public class spawnManager : MonoBehaviour
     {
         
         InvokeRepeating("spawnObs", startDelay, repeat);
+        StartCoroutine(SpawnColRoutine());
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class spawnManager : MonoBehaviour
     }
 
 
-
+    // to spawn in obsticles and power ups
     public void spawnObs()
     {
         int prefabIndex = Random.Range(0, 100);
@@ -120,6 +122,44 @@ public class spawnManager : MonoBehaviour
         }
     }
 
+
+
+    // to spawn in collactables
+ 
+
+    IEnumerator SpawnColRoutine()
+    {
+        while (true)
+        {
+            int result;
+            int index = Random.Range(0, 3);
+
+            if (index == 0)
+            {
+                result = -4;
+            }
+            else if (index == 1)
+            {
+                result = 4;
+            }
+            else
+            {
+                result = 0;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                // Increment the Z-axis position for each coin
+                float spawnZ = 50 + i * 2; // Adjust the value as needed
+
+                Vector3 spawnPositionCoin = new Vector3(result, 1, spawnZ);
+                Instantiate(collectablePrefab, spawnPositionCoin, collectablePrefab.transform.rotation);
+            }
+
+            // Wait for 2 seconds before spawning the next set
+            yield return new WaitForSeconds(2f);
+        }
+    }
 
 
 

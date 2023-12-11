@@ -8,6 +8,7 @@ public class playerSkills : MonoBehaviour
     private float doubleT = 0.4f;
     public bool powerupOn = false;
     public bool powerupIzanagi = false;
+    public bool gotCoin = false;
     public GameObject kuniPrefab;
     // Start is called before the first frame update
     void Start()
@@ -68,6 +69,14 @@ public class playerSkills : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        if (other.CompareTag("coin"))
+        {
+            Destroy(other.gameObject);
+
+
+        }
+
         if (other.CompareTag("powerup1")){
             powerupOn = true;
             Destroy(other.gameObject);
@@ -81,7 +90,8 @@ public class playerSkills : MonoBehaviour
             StartCoroutine(izanagiCountDown());
 
         }
-      
+
+
 
     }
     IEnumerator kuniCountDown()

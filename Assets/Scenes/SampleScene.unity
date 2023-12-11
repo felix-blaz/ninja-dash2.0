@@ -719,6 +719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerupOn: 0
   powerupIzanagi: 0
+  gotCoin: 0
   kuniPrefab: {fileID: 1034034046339260170, guid: 523d75a9393be334fa4087327e458876,
     type: 3}
 --- !u!1 &606821142
@@ -756,6 +757,8 @@ MonoBehaviour:
   - {fileID: 8939450068878490727, guid: 920e4580937d5c342ab804ff9b6a4eed, type: 3}
   - {fileID: 9126454884405903457, guid: 6ac84829838dd1f46885a36b26b4c5fc, type: 3}
   - {fileID: 3124194272639724716, guid: c8e67e6e850e07040816bd07de2e61f1, type: 3}
+  collectablePrefab: {fileID: 8802735238562395067, guid: 9ce45fb8a5d29544bad3ed192cf9242d,
+    type: 3}
 --- !u!4 &606821144
 Transform:
   m_ObjectHideFlags: 0
