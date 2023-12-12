@@ -5,7 +5,7 @@ using TMPro;
 
 public class gameUi : MonoBehaviour
 {
-    public TextMeshProUGUI gameOverText;
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +19,5 @@ public class gameUi : MonoBehaviour
         
     }
 
-    public void GameOver()
-    {
-        gameOverText.gameObject.SetActive(true);
-        spawnManager manager = new spawnManager();
-        manager.isGameActive = false;
-    }
+   
 }

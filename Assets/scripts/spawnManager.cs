@@ -15,14 +15,14 @@ public class spawnManager : MonoBehaviour
     private bool spawnRateChanged = false;
     private int score = 0;
     public TextMeshProUGUI scoreText;
-    public bool isGameActive;
+    
 
     // Start is called before the first frame update
 
 
     void Start()
     {
-        isGameActive = true;
+        
         InvokeRepeating("spawnObs", startDelay, repeat);
         StartCoroutine(SpawnColRoutine());
         UpdateScore(score);
@@ -63,13 +63,16 @@ public class spawnManager : MonoBehaviour
     // to spawn in obsticles and power ups
     public void spawnObs()
     {
-        
-            int prefabIndex = Random.Range(0, 100);
-        int index = Random.Range(0, 3);
+        playerDamage manager = FindObjectOfType<playerDamage>();
+        while (manager.isGameActive == true)
+        {
 
-        // spawn location on the x axixs
-        int result;
-       
+            int prefabIndex = Random.Range(0, 100);
+            int index = Random.Range(0, 3);
+
+            // spawn location on the x axixs
+            int result;
+
             while (true)
             {
                 index = Random.Range(0, 3);
@@ -129,7 +132,8 @@ public class spawnManager : MonoBehaviour
             {
                 Instantiate(obsticlePrefab[4], spawnPositionKuni, obsticlePrefab[4].transform.rotation);
             }
-        
+
+        }
     }
 
 
@@ -139,11 +143,12 @@ public class spawnManager : MonoBehaviour
 
     IEnumerator SpawnColRoutine()
     {
-        while (isGameActive)
+        playerDamage manager = FindObjectOfType<playerDamage>();
+        while (manager.isGameActive == true)
         {
             int result;
             int index = Random.Range(0, 3);
-
+             
             if (index == 0)
             {
                 result = -4;

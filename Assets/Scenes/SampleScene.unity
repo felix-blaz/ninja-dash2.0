@@ -665,7 +665,6 @@ MonoBehaviour:
   collectablePrefab: {fileID: 8802735238562395067, guid: 9ce45fb8a5d29544bad3ed192cf9242d,
     type: 3}
   scoreText: {fileID: 1371022787}
-  isGameActive: 0
 --- !u!4 &606821144
 Transform:
   m_ObjectHideFlags: 0
@@ -693,7 +692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d750eb7631384d1479d2dfdb3ea10266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverText: {fileID: 1120826848}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,6 +1385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5bd0b2f8c14447a595afffcee79b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverText: {fileID: 0}
+  isGameActive: 1
 --- !u!1 &1371022785
 GameObject:
   m_ObjectHideFlags: 0

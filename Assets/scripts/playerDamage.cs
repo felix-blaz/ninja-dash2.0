@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class playerDamage : MonoBehaviour
 {
+    public TextMeshProUGUI gameOverText;
+    public bool isGameActive = true;
     int damage = 0;
     // Start is called before the first frame update
     void Start()
@@ -15,6 +18,13 @@ public class playerDamage : MonoBehaviour
     void Update()
     {
 
+    }
+     public void GameOver()
+    {
+        
+      isGameActive = false;
+      gameOverText.gameObject.SetActive(true);
+       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,9 +39,10 @@ public class playerDamage : MonoBehaviour
 
             if (damage >= 3)
             {
-                gameUi Ui = FindObjectOfType<gameUi>();
-                Destroy(gameObject);
-                Ui.GameOver();
+               // playerDamage manager = new playerDamage();
+              //  gameUi Ui = FindObjectOfType<gameUi>();
+              //   Destroy(gameObject);
+               GameOver();
             }
 
 
