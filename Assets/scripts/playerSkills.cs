@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class playerSkills : MonoBehaviour
@@ -72,15 +73,21 @@ public class playerSkills : MonoBehaviour
 
         if (other.CompareTag("coin"))
         {
+            gotCoin = true;
             Destroy(other.gameObject);
-
+            spawnManager manager = FindObjectOfType<spawnManager>();
+            manager.UpdateScore(1);
+          
+           StartCoroutine(ResetGotCoin());
 
         }
+       
 
         if (other.CompareTag("powerup1")){
             powerupOn = true;
             Destroy(other.gameObject);
             StartCoroutine(kuniCountDown());
+
         }
 
         if (other.CompareTag("izanagiPowerUp"))
@@ -93,10 +100,19 @@ public class playerSkills : MonoBehaviour
 
 
 
+
+
+    }
+    IEnumerator ResetGotCoin()
+    {
+       
+        yield return new WaitForSeconds(0.51f);
+
+        gotCoin = false;
     }
     IEnumerator kuniCountDown()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5);
         powerupOn = false;
         
     }
@@ -104,15 +120,12 @@ public class playerSkills : MonoBehaviour
     IEnumerator izanagiCountDown()
     {
 
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(10);
 
         powerupIzanagi = false;
   
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-       
-
-    }
+  //  private void OnCollisionEnter(Collision collision)
+   
 }

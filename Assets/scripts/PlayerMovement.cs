@@ -47,7 +47,7 @@ public class NewBehaviourScript : MonoBehaviour
                          //code will move the payer 3 spaces on the X axis
 
         // Player.transform.position = new Vector3(Player.transform.position.x + 3, Player.transform.position.y, Player.transform.position.z);
-        Player.transform.position = new Vector3(Player.transform.position.x + xbounds, 0, 0);
+        Player.transform.position = new Vector3(Player.transform.position.x + xbounds, 1, 0);
 
         // transform.Translate(Vector3.left*Time.deltaTime* swipeSpeed);
     }
@@ -57,7 +57,7 @@ public class NewBehaviourScript : MonoBehaviour
                          //code will move player 3 spaces on the X axis
 
         //transform.Translate(Vector3.right * Time.deltaTime * swipeSpeed);
-        Player.transform.position = new Vector3(Player.transform.position.x - xbounds, 0, 0);
+        Player.transform.position = new Vector3(Player.transform.position.x - xbounds, 1, 0);
         //  Player.transform.position = new Vector3(Player.transform.position.x - 3, Player.transform.position.y, Player.transform.position.z);
     }
 

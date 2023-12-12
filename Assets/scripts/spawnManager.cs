@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class spawnManager : MonoBehaviour
 {
@@ -12,15 +13,21 @@ public class spawnManager : MonoBehaviour
     private float repeat = 1;
     private int lastResult;
     private bool spawnRateChanged = false;
+    private int score = 0;
+    public TextMeshProUGUI scoreText;
+    public bool isGameActive;
 
     // Start is called before the first frame update
 
 
     void Start()
     {
-        
+        isGameActive = true;
         InvokeRepeating("spawnObs", startDelay, repeat);
         StartCoroutine(SpawnColRoutine());
+        UpdateScore(score);
+
+        
     }
 
     // Update is called once per frame
@@ -36,7 +43,7 @@ public class spawnManager : MonoBehaviour
         {
             CancelInvoke("spawnObs");
             spawnRateChanged = true;
-            InvokeRepeating("spawnObs", startDelay, 3); // Start repeating with the new rate
+            InvokeRepeating("spawnObs", startDelay, 10); // Start repeating with the new rate
         }
     }
 
@@ -56,70 +63,73 @@ public class spawnManager : MonoBehaviour
     // to spawn in obsticles and power ups
     public void spawnObs()
     {
-        int prefabIndex = Random.Range(0, 100);
+        
+            int prefabIndex = Random.Range(0, 100);
         int index = Random.Range(0, 3);
 
         // spawn location on the x axixs
         int result;
-        while (true)
-        {
-            index = Random.Range(0, 3);
-
-            if (index == 0)
+       
+            while (true)
             {
-                result = -4;
+                index = Random.Range(0, 3);
+
+                if (index == 0)
+                {
+                    result = -4;
+                }
+                else if (index == 1)
+                {
+                    result = 4;
+                }
+                else
+                {
+                    result = 0;
+                }
+
+                if (result != lastResult)
+                    break;
             }
-            else if (index == 1)
+
+            lastResult = result;
+
+
+            // int[] possibleV = new int[] { -4, 0, 4 };
+            // int randPosx = possibleV[index];
+
+            Vector3 spawnPositionLog = new Vector3(result, 1, 50);
+            Vector3 spawnPositionFire = new Vector3(result, 3, 50);
+            Vector3 spawnPositionKuni = new Vector3(result, 1, 50);
+            Vector3 spawnPositionTree = new Vector3(result, -1, 50);
+            Vector3 spawnPositionIzanagi = new Vector3(result, -1, 50);
+
+            if (prefabIndex <= 29)
             {
-                result = 4;
+                Instantiate(obsticlePrefab[1], spawnPositionFire, obsticlePrefab[1].transform.rotation);
             }
-            else
+            else if (prefabIndex >= 30 && prefabIndex < 60)
             {
-                result = 0;
+                Instantiate(obsticlePrefab[0], spawnPositionTree, obsticlePrefab[0].transform.rotation);
+
+            }
+            else if (prefabIndex >= 60 && prefabIndex < 90)
+            {
+                Instantiate(obsticlePrefab[2], spawnPositionLog, obsticlePrefab[2].transform.rotation);
+
             }
 
-            if (result != lastResult)
-                break;
-        }
+            //10% chance for power up to spa
+            else if (prefabIndex >= 90 && prefabIndex < 95)
 
-        lastResult = result;
-
-
-        // int[] possibleV = new int[] { -4, 0, 4 };
-        // int randPosx = possibleV[index];
-
-        Vector3 spawnPositionLog = new Vector3(result, 1, 50);
-        Vector3 spawnPositionFire = new Vector3(result, 3, 50);
-        Vector3 spawnPositionKuni = new Vector3(result, 1, 50);
-        Vector3 spawnPositionTree = new Vector3(result, -1, 50);
-        Vector3 spawnPositionIzanagi = new Vector3(result, -1, 50);
-
-        if (prefabIndex <= 29)
-        {
-            Instantiate(obsticlePrefab[1], spawnPositionFire, obsticlePrefab[1].transform.rotation);
-        }
-        else if(prefabIndex >= 30 && prefabIndex <60)
-        {
-            Instantiate(obsticlePrefab[0], spawnPositionTree, obsticlePrefab[0].transform.rotation);
-
-        }
-        else if (prefabIndex >= 60 && prefabIndex < 90)
-        {
-            Instantiate(obsticlePrefab[2], spawnPositionLog, obsticlePrefab[2].transform.rotation);
-
-        }
-
-        //10% chance for power up to spa
-        else if(prefabIndex >= 90 && prefabIndex <95)
-           
-        {
-            Instantiate(obsticlePrefab[3], spawnPositionKuni, obsticlePrefab[3].transform.rotation);
-            // Instantiate(obsticlePrefab[prefabIndex], spawnPositionLog, obsticlePrefab[prefabIndex].transform.rotation);
-        }
-        else if (prefabIndex >= 95)
-        {
-            Instantiate(obsticlePrefab[4], spawnPositionKuni, obsticlePrefab[4].transform.rotation);
-        }
+            {
+                Instantiate(obsticlePrefab[3], spawnPositionKuni, obsticlePrefab[3].transform.rotation);
+                // Instantiate(obsticlePrefab[prefabIndex], spawnPositionLog, obsticlePrefab[prefabIndex].transform.rotation);
+            }
+            else if (prefabIndex >= 95)
+            {
+                Instantiate(obsticlePrefab[4], spawnPositionKuni, obsticlePrefab[4].transform.rotation);
+            }
+        
     }
 
 
@@ -129,7 +139,7 @@ public class spawnManager : MonoBehaviour
 
     IEnumerator SpawnColRoutine()
     {
-        while (true)
+        while (isGameActive)
         {
             int result;
             int index = Random.Range(0, 3);
@@ -147,7 +157,7 @@ public class spawnManager : MonoBehaviour
                 result = 0;
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 // Increment the Z-axis position for each coin
                 float spawnZ = 50 + i * 2; // Adjust the value as needed
@@ -161,6 +171,12 @@ public class spawnManager : MonoBehaviour
         }
     }
 
+    // keeping track of socre for collectables 
 
+    public void UpdateScore(int ScoreToAdd)
+    {
+        score += ScoreToAdd;
+        scoreText.text = "Score: " + score;
+    }
 
 }
