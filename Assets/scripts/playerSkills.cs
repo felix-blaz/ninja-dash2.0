@@ -11,6 +11,8 @@ public class playerSkills : MonoBehaviour
     public bool powerupIzanagi = false;
     public bool gotCoin = false;
     public GameObject kuniPrefab;
+    private bool hasResetSpawnRate = false;
+    int num = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,7 @@ public class playerSkills : MonoBehaviour
     void Update()
     {
         shootKuni();
-        slowDownTime();
+        izanagi();
     }
 
     // shooting kuni of a double tap
@@ -49,24 +51,26 @@ public class playerSkills : MonoBehaviour
     }
 
     //delaying the repeate rate of obsticles
-    public void slowDownTime()
+    public void izanagi()
     {
-       
-        if (powerupIzanagi == true)
+
+        spawnManager manager = FindObjectOfType<spawnManager>();
+
+        if (powerupIzanagi && num == 1)
         {
-            spawnManager manager = FindObjectOfType<spawnManager>();
             manager.slowDownTime();
-
+            num = 0;
+            hasResetSpawnRate = false; // Reset the flag when Izanagi is activated
         }
-        else if (powerupIzanagi == false)
+        else if (!powerupIzanagi && num == 0 && !hasResetSpawnRate)
         {
-            spawnManager manager = FindObjectOfType<spawnManager>();
             manager.ResetSpawnRate();
+            num = 1;
+            hasResetSpawnRate = true; // Set the flag after resetting spawn rate
         }
-       
-        
+    
 
-    }
+}
 
     private void OnTriggerEnter(Collider other)
     {

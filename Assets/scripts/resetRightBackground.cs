@@ -14,8 +14,14 @@ public class resetRightBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.z < beginP.z -15) {
-            transform.position = beginP;
+        playerDamage manager = FindObjectOfType<playerDamage>();
+        while (manager.isGameActive == true)
+        {
+            if (transform.position.z < beginP.z - 15)
+            {
+                transform.position = beginP;
+            }
         }
     }
+
 }

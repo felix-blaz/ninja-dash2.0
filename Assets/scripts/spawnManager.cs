@@ -9,13 +9,14 @@ public class spawnManager : MonoBehaviour
     public GameObject[] obsticlePrefab;
     public GameObject collectablePrefab;
    
-    private float startDelay = 1;
+
     private float repeat = 1;
     private int lastResult;
-    private bool spawnRateChanged = false;
+
     private int score = 0;
     public TextMeshProUGUI scoreText;
-    
+    IEnumerator ss;
+
 
     // Start is called before the first frame update
 
@@ -23,8 +24,9 @@ public class spawnManager : MonoBehaviour
     void Start()
     {
         
-        InvokeRepeating("spawnObs", startDelay, repeat);
         StartCoroutine(SpawnColRoutine());
+        ss = SpawnObstaclesroutine();
+        StartCoroutine(ss);
         UpdateScore(score);
 
         
@@ -37,35 +39,38 @@ public class spawnManager : MonoBehaviour
     }
 
     // Function to be called when you want to apply slowdown
-    public void slowDownTime()
+  public void slowDownTime() { 
+            StopCoroutine(ss);
+       
+    }
+
+    public void ResetSpawnRate()
     {
-        if (spawnRateChanged == false)
-        {
-            CancelInvoke("spawnObs");
-            spawnRateChanged = true;
-            InvokeRepeating("spawnObs", startDelay, 10); // Start repeating with the new rate
-        }
+        ss = SpawnObstaclesroutine();
+        StartCoroutine(ss);
+
     }
 
     // Function to be called when you want to reset the spawn rate
-    public void ResetSpawnRate()
-    {
-        if (spawnRateChanged ==true )
+
+
+
+
+    private IEnumerator SpawnObstaclesroutine(){
+        playerDamage manager = FindObjectOfType<playerDamage>();
+        while (manager.isGameActive == true)
         {
-           CancelInvoke("spawnObs");
-            InvokeRepeating("spawnObs", startDelay, repeat);
-            spawnRateChanged = false;
+            spawnObs();
+            yield return new WaitForSeconds(repeat);
         }
-       
     }
+
 
 
     // to spawn in obsticles and power ups
     public void spawnObs()
     {
-        playerDamage manager = FindObjectOfType<playerDamage>();
-        while (manager.isGameActive == true)
-        {
+      
 
             int prefabIndex = Random.Range(0, 100);
             int index = Random.Range(0, 3);
@@ -134,7 +139,7 @@ public class spawnManager : MonoBehaviour
             }
 
         }
-    }
+    
 
 
 
