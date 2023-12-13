@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class spawnManager : MonoBehaviour
 {
-   
+    public Button button;
+    public TextMeshProUGUI startGameText;
     public GameObject[] obsticlePrefab;
     public GameObject collectablePrefab;
-   
 
+    float waitTime = 2;
     private float repeat = 1;
     private int lastResult;
 
@@ -23,13 +25,10 @@ public class spawnManager : MonoBehaviour
 
     void Start()
     {
-        
-        StartCoroutine(SpawnColRoutine());
-        ss = SpawnObstaclesroutine();
-        StartCoroutine(ss);
-        UpdateScore(score);
 
-        
+      
+
+
     }
 
     // Update is called once per frame
@@ -60,7 +59,12 @@ public class spawnManager : MonoBehaviour
         playerDamage manager = FindObjectOfType<playerDamage>();
         while (manager.isGameActive == true)
         {
-            spawnObs();
+            //while the power mup is on spawn obsticles
+            playerSkills ps = FindObjectOfType<playerSkills>();
+            if (ps.powerupIzanagi == false)
+            {
+                spawnObs();
+            }
             yield return new WaitForSeconds(repeat);
         }
     }
@@ -187,6 +191,37 @@ public class spawnManager : MonoBehaviour
     {
         score += ScoreToAdd;
         scoreText.text = "Score: " + score;
+       playerSkills ps = FindObjectOfType<playerSkills>();
+
+        if (score % 20 == 0 && score > 0 && ps.powerupIzanagi == false)
+        {
+            IncreaseDifficulty();
+        }
+
+
+    }
+
+    private void IncreaseDifficulty()
+    {
+        waitTime -= 0.1f; 
+                        
+
+        // Restart the obstacle spawning routine with the updated difficulty
+        ResetSpawnRate();
+    }
+
+    public void StartGame()
+    {
+      //  NewBehaviourScript PM = FindObjectOfType<NewBehaviourScript>();
+        playerDamage pd = FindObjectOfType<playerDamage>();
+        pd.isGameActive = true;
+        startGameText.gameObject.SetActive(false);
+        button.gameObject.SetActive(false);
+       // PM.playerRb = GetComponent<Rigidbody>();
+        StartCoroutine(SpawnColRoutine());
+        ss = SpawnObstaclesroutine();
+        StartCoroutine(ss);
+        UpdateScore(score);
     }
 
 }

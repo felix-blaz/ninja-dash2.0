@@ -13,6 +13,10 @@ public class playerSkills : MonoBehaviour
     public GameObject kuniPrefab;
     private bool hasResetSpawnRate = false;
     int num = 1;
+    public GameObject kuniIndecator;
+    public GameObject izanagiIndecator;
+    private Vector3 izaPos = new Vector3(0.3f, 1.3f, 0);
+    private Vector3 kuniPos = new Vector3(-0.3f, 1.3f, 0);
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +28,8 @@ public class playerSkills : MonoBehaviour
     {
         shootKuni();
         izanagi();
+       izanagiIndecator.transform.position = transform.position + izaPos;
+        kuniIndecator.transform.position = transform.position + kuniPos;
     }
 
     // shooting kuni of a double tap
@@ -89,6 +95,7 @@ public class playerSkills : MonoBehaviour
 
         if (other.CompareTag("powerup1")){
             powerupOn = true;
+            kuniIndecator.gameObject.SetActive(true);
             Destroy(other.gameObject);
             StartCoroutine(kuniCountDown());
 
@@ -97,6 +104,7 @@ public class playerSkills : MonoBehaviour
         if (other.CompareTag("izanagiPowerUp"))
         {
             powerupIzanagi = true;
+            izanagiIndecator.gameObject.SetActive(true);
             Destroy(other.gameObject);
             StartCoroutine(izanagiCountDown());
 
@@ -117,6 +125,7 @@ public class playerSkills : MonoBehaviour
     IEnumerator kuniCountDown()
     {
         yield return new WaitForSeconds(5);
+        kuniIndecator.gameObject.SetActive(false);
         powerupOn = false;
         
     }
@@ -125,6 +134,7 @@ public class playerSkills : MonoBehaviour
     {
 
         yield return new WaitForSeconds(10);
+        izanagiIndecator.gameObject.SetActive(false);
 
         powerupIzanagi = false;
   

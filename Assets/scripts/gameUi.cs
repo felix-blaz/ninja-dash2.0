@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class gameUi : MonoBehaviour
 {
-   
+    
+    
+
     // Start is called before the first frame update
     void Start()
     {
-       
+      // button = GetComponent<Button>();
         
     }
 
@@ -19,5 +24,11 @@ public class gameUi : MonoBehaviour
         
     }
 
-   
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+     
+
 }

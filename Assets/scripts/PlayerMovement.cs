@@ -14,32 +14,38 @@ public class NewBehaviourScript : MonoBehaviour
     public float gravityModifier;
     public bool onGround = true;
     public float xbounds = 4;
-  
+    playerDamage pd;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+       playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
-        // Player.transform.position = new Vector3(0, 1, 0);
+        pd = FindObjectOfType<playerDamage>();
+        Player.transform.position = new Vector3(0, 1, 0);
+
     }
 
     // Update is called once per frame
     void Update()
-    {   
-        // keeping these player in bours  at -4 and 4
-        if(transform.position.x < -xbounds ) {
-
-            transform.position = new Vector3(-xbounds, transform.position.y, transform.position.z);
-        }
-        else if(transform.position.x > xbounds)
+    {
+        if (pd.isGameActive == true)
         {
-            transform.position = new Vector3(xbounds, transform.position.y, transform.position.z);
+            // keeping these player in bours  at -4 and 4
+            if (transform.position.x < -xbounds)
+            {
+
+                transform.position = new Vector3(-xbounds, transform.position.y, transform.position.z);
+            }
+            else if (transform.position.x > xbounds)
+            {
+                transform.position = new Vector3(xbounds, transform.position.y, transform.position.z);
+            }
+            playerControl();
+
         }
-        playerControl();
-
     }
-
 
 
     public void right()
