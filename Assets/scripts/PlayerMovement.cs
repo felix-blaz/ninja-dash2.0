@@ -98,7 +98,7 @@ public class NewBehaviourScript : MonoBehaviour
 
                 if (Mathf.Abs(X) > Mathf.Abs(Y))
                 {
-                    // if its less that z its negative which is left
+                    // if the diffrence in  x is greater than Y this is to avoid diaginal cases 
                     // Horizontal Swipe
                     if (X < 0)
                     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,9 @@ public class playerDamage : MonoBehaviour
     public TextMeshProUGUI playerHealth;
     public bool isGameActive = false;
     public Button restartButtion;
-    
+    public bool tookDamage = false;
+    public bool tookHealth = false;
+
     private int health = 3;
     // Start is called before the first frame update
     void Start()
@@ -34,16 +37,30 @@ public class playerDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
-       
+
+        if (other.CompareTag("health"))
+        {
+            tookHealth = true;
+            Destroy(other.gameObject);
+            if (health < 3)
+            {
+                health++;
+
+                playerHealth.text = "Health : " + health;
+
+            }
+            StartCoroutine(ResettookHealth());
+        }
 
         //when an obsticle colides with the player 3 times the game ends 
-            if (other.CompareTag("obsticles") )
+        if (other.CompareTag("obsticles") )
             {
+            tookDamage = true;
           // health does down after every collision
             health--;
             playerHealth.text = "Health : " + health;
             Destroy(other.gameObject);
+            StartCoroutine(ResettookDamage());
             //when health reaches 0 game is over
             if ( health == 0)
             {
@@ -51,12 +68,24 @@ public class playerDamage : MonoBehaviour
                //  Destroy(gameObject);
                GameOver();
             }
-
-
-
             }
-            
-     }
+
+        IEnumerator ResettookDamage()
+        {
+
+            yield return new WaitForSeconds(0.51f);
+
+            tookDamage = false;
+        }
+        IEnumerator ResettookHealth()
+        {
+
+            yield return new WaitForSeconds(0.51f);
+
+            tookHealth = false;
+        }
+
+    }
 
     
 }

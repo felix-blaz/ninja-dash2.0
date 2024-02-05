@@ -12,7 +12,7 @@ public class spawnManager : MonoBehaviour
     public GameObject collectablePrefab;
 
     float waitTime = 2;
-    private float repeat = 1;
+    
     private int lastResult;
 
     private int score = 0;
@@ -65,7 +65,7 @@ public class spawnManager : MonoBehaviour
             {
                 spawnObs();
             }
-            yield return new WaitForSeconds(repeat);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 
@@ -112,8 +112,9 @@ public class spawnManager : MonoBehaviour
             Vector3 spawnPositionLog = new Vector3(result, 1, 50);
             Vector3 spawnPositionFire = new Vector3(result, 3, 50);
             Vector3 spawnPositionKuni = new Vector3(result, 1, 50);
+            Vector3 spawnPositionHeart = new Vector3(result, 1, 50);
             Vector3 spawnPositionTree = new Vector3(result, -1, 50);
-            Vector3 spawnPositionIzanagi = new Vector3(result, -1, 50);
+            Vector3 spawnPositionIzanagi = new Vector3(result, 1, 50);
 
             if (prefabIndex <= 29)
             {
@@ -131,18 +132,22 @@ public class spawnManager : MonoBehaviour
             }
 
             //10% chance for power up to spa
-            else if (prefabIndex >= 90 && prefabIndex < 95)
+            else if (prefabIndex >= 90 && prefabIndex < 93)
 
             {
                 Instantiate(obsticlePrefab[3], spawnPositionKuni, obsticlePrefab[3].transform.rotation);
                 // Instantiate(obsticlePrefab[prefabIndex], spawnPositionLog, obsticlePrefab[prefabIndex].transform.rotation);
             }
-            else if (prefabIndex >= 95)
+            else if (prefabIndex >= 93 && prefabIndex < 96)
             {
-                Instantiate(obsticlePrefab[4], spawnPositionKuni, obsticlePrefab[4].transform.rotation);
+                Instantiate(obsticlePrefab[4], spawnPositionIzanagi, obsticlePrefab[4].transform.rotation);
+            }
+            else if (prefabIndex >= 96)
+            {
+                Instantiate(obsticlePrefab[5], spawnPositionHeart, obsticlePrefab[5].transform.rotation);
             }
 
-        }
+    }
     
 
 
