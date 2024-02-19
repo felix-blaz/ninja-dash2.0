@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class spawnManager : MonoBehaviour
 {
-    public Button button;
+    public Button button; public Button button2; public Button button3;
     public TextMeshProUGUI startGameText;
     public GameObject[] obsticlePrefab;
     public GameObject collectablePrefab;
@@ -26,7 +27,15 @@ public class spawnManager : MonoBehaviour
     void Start()
     {
 
-      
+        playerDamage pd = FindObjectOfType<playerDamage>();
+        pd.isGameActive = true;
+        // startGameText.gameObject.SetActive(false);
+        //button.gameObject.SetActive(false); button2.gameObject.SetActive(false); button3.gameObject.SetActive(false);
+        // PM.playerRb = GetComponent<Rigidbody>();
+        StartCoroutine(SpawnColRoutine());
+        ss = SpawnObstaclesroutine();
+        StartCoroutine(ss);
+        UpdateScore(score);
 
 
     }
@@ -217,16 +226,9 @@ public class spawnManager : MonoBehaviour
 
     public void StartGame()
     {
-      //  NewBehaviourScript PM = FindObjectOfType<NewBehaviourScript>();
-        playerDamage pd = FindObjectOfType<playerDamage>();
-        pd.isGameActive = true;
-        startGameText.gameObject.SetActive(false);
-        button.gameObject.SetActive(false);
-       // PM.playerRb = GetComponent<Rigidbody>();
-        StartCoroutine(SpawnColRoutine());
-        ss = SpawnObstaclesroutine();
-        StartCoroutine(ss);
-        UpdateScore(score);
+        //  NewBehaviourScript PM = FindObjectOfType<NewBehaviourScript>();
+        SceneManager.LoadSceneAsync("game");
+       
     }
 
 }
