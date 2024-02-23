@@ -4,36 +4,61 @@ using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
+
 
 
 public class playerDamage : MonoBehaviour
 {
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI playerHealth;
+    public TextMeshProUGUI yourScore;
     public bool isGameActive = false;
-    public Button restartButtion;
+    public GameObject gameOver;
     public bool tookDamage = false;
     public bool tookHealth = false;
+    public bool dead = false;
+    public int finalScore = 0;
 
     private int health = 3;
     // Start is called before the first frame update
+
+   
+
+    
+
+   
     void Start()
     {
-
+      
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       
     }
      public void GameOver()
     {
         
       isGameActive = false;
-      gameOverText.gameObject.SetActive(true);
-       restartButtion.gameObject.SetActive(true);
+        spawnManager manager = FindObjectOfType<spawnManager>();
+        finalScore = manager.score;
+        GameManager.Instance.StoreScore(finalScore);
+
+        // Debug.Log(finalScore);
+        yourScore.text = "Final score: " + finalScore;
+       gameOver.gameObject.SetActive(true);
+        
     }
+
+
+   
+
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,8 +90,9 @@ public class playerDamage : MonoBehaviour
             if ( health == 0)
             {
               
-               //  Destroy(gameObject);
-               GameOver();
+
+                //  Destroy(gameObject);
+                GameOver();
             }
             }
 

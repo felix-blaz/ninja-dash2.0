@@ -11,7 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float swipeSpeed;
     private Rigidbody playerRb;
     public float jumpForce;
-    public float gravityModifier;
+    private float gravityModifier = 1;
     public bool onGround = true;
     public float xbounds = 4;
     playerDamage pd;
@@ -20,10 +20,12 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       playerRb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
-        pd = FindObjectOfType<playerDamage>();
-        Player.transform.position = new Vector3(0, 1, 0);
+        
+            playerRb = GetComponent<Rigidbody>();
+            Physics.gravity *= gravityModifier;
+            pd = FindObjectOfType<playerDamage>();
+            Player.transform.position = new Vector3(0, 1, 0);
+        
 
     }
 

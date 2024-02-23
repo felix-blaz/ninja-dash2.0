@@ -16,27 +16,29 @@ public class spawnManager : MonoBehaviour
     
     private int lastResult;
 
-    private int score = 0;
+    public int score = 0;
     public TextMeshProUGUI scoreText;
     IEnumerator ss;
 
 
     // Start is called before the first frame update
 
-
+   
     void Start()
     {
-
-        playerDamage pd = FindObjectOfType<playerDamage>();
-        pd.isGameActive = true;
-        // startGameText.gameObject.SetActive(false);
-        //button.gameObject.SetActive(false); button2.gameObject.SetActive(false); button3.gameObject.SetActive(false);
-        // PM.playerRb = GetComponent<Rigidbody>();
-        StartCoroutine(SpawnColRoutine());
-        ss = SpawnObstaclesroutine();
-        StartCoroutine(ss);
-        UpdateScore(score);
-
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "game")
+        {
+            playerDamage pd = FindObjectOfType<playerDamage>();
+            pd.isGameActive = true;
+            // startGameText.gameObject.SetActive(false);
+            //button.gameObject.SetActive(false); button2.gameObject.SetActive(false); button3.gameObject.SetActive(false);
+            // PM.playerRb = GetComponent<Rigidbody>();
+            StartCoroutine(SpawnColRoutine());
+            ss = SpawnObstaclesroutine();
+            StartCoroutine(ss);
+            UpdateScore(score);
+        }
 
     }
 
@@ -229,6 +231,14 @@ public class spawnManager : MonoBehaviour
         //  NewBehaviourScript PM = FindObjectOfType<NewBehaviourScript>();
         SceneManager.LoadSceneAsync("game");
        
+    }
+
+    public void mainMenu()
+    {
+      
+           
+        
+        SceneManager.LoadScene("Main Menu");
     }
 
 }
