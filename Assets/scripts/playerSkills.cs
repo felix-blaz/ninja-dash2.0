@@ -17,7 +17,7 @@ public class playerSkills : MonoBehaviour
     public GameObject izanagiIndecator;
     private Vector3 izaPos = new Vector3(0.3f, 1.3f, 0);
     private Vector3 kuniPos = new Vector3(0, 0, 0);
-    private Vector3 fly = new Vector3(0, 0, 1);
+    private Vector3 fly = new Vector3(0, 1, 1);
 
     // Start is called before the first frame update
     void Start()

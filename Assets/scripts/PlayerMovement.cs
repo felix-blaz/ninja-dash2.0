@@ -15,13 +15,14 @@ public class NewBehaviourScript : MonoBehaviour
     public bool onGround = true;
     public float xbounds = 4;
     playerDamage pd;
-
+    private Animator playerAnim;
 
     // Start is called before the first frame update
     void Start()
     {
         
             playerRb = GetComponent<Rigidbody>();
+        playerAnim = GetComponent<Animator>();
             Physics.gravity *= gravityModifier;
             pd = FindObjectOfType<playerDamage>();
             Player.transform.position = new Vector3(0, 1, 0);
@@ -73,6 +74,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
                         //code will allow player to jump
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        
 
     }
 
@@ -119,6 +121,7 @@ public class NewBehaviourScript : MonoBehaviour
                     if (Y > 0)
                     {
                         // Swipe Up (Jump)
+                        playerAnim.SetTrigger("Jump_trig");
                         jump();
                         onGround = false;
                     }

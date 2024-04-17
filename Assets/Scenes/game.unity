@@ -2776,7 +2776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1276245090}
   swipeSpeed: 10
-  jumpForce: 12
+  jumpForce: 11
   onGround: 1
   xbounds: 4
 --- !u!114 &1276245098
