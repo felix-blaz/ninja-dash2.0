@@ -14,7 +14,7 @@ public class kuniMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * 15f);
+        transform.Translate(Vector3.down * Time.deltaTime * 15f);
     }
     private void OnTriggerEnter(Collider other)
     {
