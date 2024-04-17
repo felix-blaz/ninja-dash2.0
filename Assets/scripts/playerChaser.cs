@@ -7,7 +7,7 @@ using UnityEngine;
 public class playerChaser : MonoBehaviour
 {
     public GameObject Player;
-    private Vector3 chasePos = new Vector3(0, 0, -8);
+    private Vector3 chasePos = new Vector3(0, 1, -8);
     private float seconds = 0f;
 
     //private Vector3 NewchasePos = new Vector3 (0, 0, )
