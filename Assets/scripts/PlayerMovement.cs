@@ -16,17 +16,20 @@ public class NewBehaviourScript : MonoBehaviour
     public float xbounds = 4;
     playerDamage pd;
     private Animator playerAnim;
+    public AudioClip runningAudioClip;
+    public AudioSource playerAudio;
 
     // Start is called before the first frame update
     void Start()
     {
         
-            playerRb = GetComponent<Rigidbody>();
-        playerAnim = GetComponent<Animator>();
-            Physics.gravity *= gravityModifier;
-            pd = FindObjectOfType<playerDamage>();
-            Player.transform.position = new Vector3(0, 1, 0);
-        
+      playerRb = GetComponent<Rigidbody>();
+      playerAnim = GetComponent<Animator>();
+      Physics.gravity *= gravityModifier;
+      pd = FindObjectOfType<playerDamage>();
+      Player.transform.position = new Vector3(0, 1, 0);
+      playerAudio = GetComponent<AudioSource>();
+
 
     }
 
@@ -47,6 +50,10 @@ public class NewBehaviourScript : MonoBehaviour
             }
             playerControl();
 
+        } else if (pd.isGameActive == false)
+        {
+            playerAudio.loop = false;
+            playerAudio.Stop();
         }
     }
 
@@ -96,6 +103,12 @@ public class NewBehaviourScript : MonoBehaviour
 
             if (onGround)
             {
+              
+                    playerAudio.clip = runningAudioClip;
+                    playerAudio.volume = 0.4f;
+                    playerAudio.loop = true;
+                    playerAudio.Play();
+              
                 //getting the value of the diffrence between start and end touch for the X axis and Y axis
                 float X = endTouchPosition.x - startTouchPosition.x;
                 float Y = endTouchPosition.y - startTouchPosition.y;
@@ -122,6 +135,7 @@ public class NewBehaviourScript : MonoBehaviour
                     {
                         // Swipe Up (Jump)
                         playerAnim.SetTrigger("Jump_trig");
+                        playerAudio.Stop();
                         jump();
                         onGround = false;
                     }

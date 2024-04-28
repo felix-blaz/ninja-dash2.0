@@ -14,15 +14,21 @@ public class playerSkills : MonoBehaviour
     private bool hasResetSpawnRate = false;
     int num = 1;
     public GameObject kuniIndecator;
-    public GameObject izanagiIndecator;
+    public AudioClip kuniupAudioClip;
+    public AudioClip kuniAudioClip;
+    public AudioClip coinAudioclip;
+    public AudioClip izanagiAudioClip;
+
+    public AudioSource playerAudio;
     private Vector3 izaPos = new Vector3(0.3f, 1.3f, 0);
     private Vector3 kuniPos = new Vector3(0, 0, 0);
     private Vector3 fly = new Vector3(0, 1, 1);
+    public GameObject izanagibg;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -30,7 +36,7 @@ public class playerSkills : MonoBehaviour
     {
         shootKuni();
         izanagi();
-       izanagiIndecator.transform.position = transform.position + izaPos;
+     
         kuniIndecator.transform.position = transform.position + kuniPos;
     }
 
@@ -50,6 +56,7 @@ public class playerSkills : MonoBehaviour
                     if (tapS <= doubleT)
                     {
                         Instantiate(kuniPrefab, transform.position + fly, kuniPrefab.transform.rotation);
+                        playerAudio.PlayOneShot(kuniAudioClip, 1.0f);
                     }
 
                     tapT = Time.time;
@@ -89,8 +96,8 @@ public class playerSkills : MonoBehaviour
             Destroy(other.gameObject);
             spawnManager manager = FindObjectOfType<spawnManager>();
             manager.UpdateScore(1);
-          
-           StartCoroutine(ResetGotCoin());
+            playerAudio.PlayOneShot(coinAudioclip, 1.0f);
+            StartCoroutine(ResetGotCoin());
 
         }
        
@@ -99,6 +106,7 @@ public class playerSkills : MonoBehaviour
             powerupOn = true;
             kuniIndecator.gameObject.SetActive(true);
             Destroy(other.gameObject);
+            playerAudio.PlayOneShot(kuniupAudioClip, 1.0f);
             StartCoroutine(kuniCountDown());
 
         }
@@ -106,10 +114,13 @@ public class playerSkills : MonoBehaviour
         if (other.CompareTag("izanagiPowerUp"))
         {
             powerupIzanagi = true;
-            izanagiIndecator.gameObject.SetActive(true);
+          
             Destroy(other.gameObject);
             StartCoroutine(izanagiCountDown());
-
+            playerAudio.PlayOneShot(izanagiAudioClip, 1.0f);
+            
+            izanagibg.gameObject.SetActive(true);
+            
         }
 
 
@@ -136,8 +147,8 @@ public class playerSkills : MonoBehaviour
     {
 
         yield return new WaitForSeconds(10);
-        izanagiIndecator.gameObject.SetActive(false);
-
+       
+        izanagibg.gameObject.SetActive(false);
         powerupIzanagi = false;
   
     }

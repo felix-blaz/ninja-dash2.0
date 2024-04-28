@@ -16,6 +16,9 @@ public class playerDamage : MonoBehaviour
     public TextMeshProUGUI yourScore;
     public bool isGameActive = false;
     public GameObject gameOver;
+    public AudioClip ramenAudioClip;
+    public AudioClip damageAudioClip;
+    public AudioSource playerAudio;
     public bool tookDamage = false;
     public bool tookHealth = false;
     public bool dead = false;
@@ -31,7 +34,7 @@ public class playerDamage : MonoBehaviour
    
     void Start()
     {
-      
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +69,7 @@ public class playerDamage : MonoBehaviour
         if (other.CompareTag("health"))
         {
             tookHealth = true;
+            playerAudio.PlayOneShot(ramenAudioClip, 1.0f);
             Destroy(other.gameObject);
             if (health < 3)
             {
@@ -83,6 +87,7 @@ public class playerDamage : MonoBehaviour
             tookDamage = true;
           // health does down after every collision
             health--;
+            playerAudio.PlayOneShot(damageAudioClip, 1.0f);
             playerHealth.text = "Health : " + health;
             Destroy(other.gameObject);
             StartCoroutine(ResettookDamage());
