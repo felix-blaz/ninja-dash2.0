@@ -6,9 +6,11 @@ using UnityEngine.AdaptivePerformance.VisualScripting;
 public class kuniMover : MonoBehaviour
 {
     // Start is called before the first frame update
+    public AudioClip kuniaAudioClip;
+    public AudioSource kuniaAudio;
     void Start()
     {
-
+        kuniaAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -18,7 +20,9 @@ public class kuniMover : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        
         Destroy(gameObject);
         Destroy(other.gameObject);
+        kuniaAudio.PlayOneShot(kuniaAudioClip, 1.0f);
     }
 }

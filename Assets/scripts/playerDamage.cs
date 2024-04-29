@@ -18,7 +18,13 @@ public class playerDamage : MonoBehaviour
     public GameObject gameOver;
     public AudioClip ramenAudioClip;
     public AudioClip damageAudioClip;
+    public ParticleSystem lifeparticle;
+    public ParticleSystem smokeparticle;
+    public AudioClip deadAudioClip;
     public AudioSource playerAudio;
+    private Animator animator;
+
+
     public bool tookDamage = false;
     public bool tookHealth = false;
     public bool dead = false;
@@ -35,6 +41,7 @@ public class playerDamage : MonoBehaviour
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -70,6 +77,7 @@ public class playerDamage : MonoBehaviour
         {
             tookHealth = true;
             playerAudio.PlayOneShot(ramenAudioClip, 1.0f);
+            lifeparticle.Play();
             Destroy(other.gameObject);
             if (health < 3)
             {
@@ -87,17 +95,19 @@ public class playerDamage : MonoBehaviour
             tookDamage = true;
           // health does down after every collision
             health--;
-            playerAudio.PlayOneShot(damageAudioClip, 1.0f);
+            playerAudio.PlayOneShot(damageAudioClip, 2.0f);
             playerHealth.text = "Health : " + health;
             Destroy(other.gameObject);
             StartCoroutine(ResettookDamage());
             //when health reaches 0 game is over
             if ( health == 0)
             {
-              
-
-                //  Destroy(gameObject);
-                GameOver();
+                playerAudio.PlayOneShot(deadAudioClip, 1.0f);
+                smokeparticle.Play();
+                animator.SetBool("Death_b", true);
+                animator.SetInteger("DeathType_int", 1);
+                StartCoroutine(chill());
+                
             }
             }
 
@@ -111,9 +121,17 @@ public class playerDamage : MonoBehaviour
         IEnumerator ResettookHealth()
         {
 
-            yield return new WaitForSeconds(0.51f);
+            yield return new WaitForSeconds(0.1f);
 
             tookHealth = false;
+        }
+
+        IEnumerator chill()
+        {
+
+            yield return new WaitForSeconds(0.5f);
+            GameOver();
+
         }
 
     }

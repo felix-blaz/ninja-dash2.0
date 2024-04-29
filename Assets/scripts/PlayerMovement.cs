@@ -17,6 +17,7 @@ public class NewBehaviourScript : MonoBehaviour
     playerDamage pd;
     private Animator playerAnim;
     public AudioClip runningAudioClip;
+    public AudioClip jumpAudioClip;
     public AudioSource playerAudio;
 
     // Start is called before the first frame update
@@ -80,6 +81,7 @@ public class NewBehaviourScript : MonoBehaviour
     public void jump()
     {
                         //code will allow player to jump
+        playerAudio.PlayOneShot(jumpAudioClip, 1.0f);
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         
 

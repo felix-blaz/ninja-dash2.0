@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public Scores yourScore = new Scores();
-    public int scoreStorage = 20;
+    public int scoreStorage = 15;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             LoadScores();  // Load scores when the game starts
             Debug.Log("PlayerPrefs Data: " + PlayerPrefs.GetString("Scores"));
-            //DeleteAllScores();
+            DeleteAllScores();
         }
         else
         {
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         // Sort the scores in descending order
         yourScore.scores.Sort((a, b) => b.CompareTo(a));
 
-        // Trim the list to the top 20 scores
+        // Trim the list to the top 15 scores
         if (yourScore.scores.Count > scoreStorage)
         {
             yourScore.scores = yourScore.scores.GetRange(0, scoreStorage);

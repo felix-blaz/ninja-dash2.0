@@ -9,6 +9,11 @@ public class playerChaser : MonoBehaviour
     public GameObject Player;
     private Vector3 chasePos = new Vector3(0, 2, -8);
     private float seconds = 0f;
+    public AudioClip chasserAudioClip;
+    public AudioClip catchAudio;
+    public AudioSource chaserAudio;
+    bool audioPlaying = false;
+    public ParticleSystem chaserParticle;
 
     //private Vector3 NewchasePos = new Vector3 (0, 0, )
     public float speed = 0.1f;
@@ -16,6 +21,7 @@ public class playerChaser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        chaserAudio = GetComponent<AudioSource>();
         transform.position = Player.transform.position + chasePos;
     }
 
@@ -52,17 +58,37 @@ public class playerChaser : MonoBehaviour
 
                 chasePos.z = -8;
             }
-
+            if (chasePos.z > -5 && !audioPlaying)
+            {
+                PlayChaserAudio();
+            }
         }
 
+    }
+    void PlayChaserAudio()
+    {
+        chaserAudio.PlayOneShot(chasserAudioClip, 1.0f);
+        audioPlaying = true;
     }
     private void OnTriggerEnter(Collider other)
     {
+
         playerDamage manager = FindObjectOfType<playerDamage>();
         if (other.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
-            manager.GameOver();
+            chaserAudio.PlayOneShot(catchAudio, 1.0f);
+            chaserParticle.Play();
+           // Destroy(other.gameObject);
+            StartCoroutine(chill());
         }
     }
+
+        IEnumerator chill()
+        {
+
+        yield return new WaitForSeconds(0.5f);
+        playerDamage manager = FindObjectOfType<playerDamage>();
+        manager.GameOver();
+
+        }
 }
