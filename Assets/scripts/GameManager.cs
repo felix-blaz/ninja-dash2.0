@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             LoadScores();  // Load scores when the game starts
             Debug.Log("PlayerPrefs Data: " + PlayerPrefs.GetString("Scores"));
-            DeleteAllScores();
+           // DeleteAllScores();
         }
         else
         {

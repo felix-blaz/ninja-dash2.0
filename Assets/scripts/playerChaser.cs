@@ -7,7 +7,7 @@ using UnityEngine;
 public class playerChaser : MonoBehaviour
 {
     public GameObject Player;
-    private Vector3 chasePos = new Vector3(0, 2, -8);
+    private Vector3 chasePos = new Vector3(0, 2, -8f);
     private float seconds = 0f;
     public AudioClip chasserAudioClip;
     public AudioClip catchAudio;
