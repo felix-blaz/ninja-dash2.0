@@ -11,7 +11,7 @@ public class playerSkills : MonoBehaviour
     public bool powerupIzanagi = false;
     public bool gotCoin = false;
     public GameObject kuniPrefab;
-    private bool hasResetSpawnRate = false;
+    private bool resettingSpawnRate = false;
     int num = 1;
     public GameObject kuniIndecator;
     public AudioClip kuniupAudioClip;
@@ -65,7 +65,7 @@ public class playerSkills : MonoBehaviour
         }
     }
 
-    //delaying the repeate rate of obsticles
+    //  Slowing down the spawn rate of obstacles for powerup
     public void izanagi()
     {
 
@@ -75,13 +75,13 @@ public class playerSkills : MonoBehaviour
         {
             manager.slowDownTime();
             num = 0;
-            hasResetSpawnRate = false; // Reset the flag when Izanagi is activated
+            resettingSpawnRate = false; // Reset 
         }
-        else if (!powerupIzanagi && num == 0 && !hasResetSpawnRate)
+        else if (!powerupIzanagi && num == 0 && !resettingSpawnRate)
         {
             manager.ResetSpawnRate();
             num = 1;
-            hasResetSpawnRate = true; // Set the flag after resetting spawn rate
+            resettingSpawnRate = true; // Set to true after 
         }
     
 
@@ -153,6 +153,6 @@ public class playerSkills : MonoBehaviour
   
     }
 
-  //  private void OnCollisionEnter(Collision collision)
+  
    
 }

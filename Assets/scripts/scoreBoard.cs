@@ -14,15 +14,14 @@ public class scoreBoard : MonoBehaviour
     {
         entryContainer = transform.Find("highscoreEntryContainer");
         entryTemplate = entryContainer.Find("highscoreEntryTemplate");
-
-        // Disable the template
+ 
         entryTemplate.gameObject.SetActive(false);
 
         // Read in scores from PlayerPrefs
         string playerPrefsData = PlayerPrefs.GetString("Scores");
         Scores playerScores = JsonUtility.FromJson<Scores>(playerPrefsData);
 
-        // Create a list of HighscoreEntry instances from the player's scores
+        // Create a list of HighscoreEntrys from the player's scores
         highscoreEntryList = new List<HighscoreEntry>();
         foreach (int score in playerScores.scores)
         {
@@ -50,7 +49,7 @@ public class scoreBoard : MonoBehaviour
         rectTransform.anchoredPosition = new Vector2(0, -50f * transformList.Count);
 
 
-        // Populate the entry with data
+        // fill it with labels
         int rank = transformList.Count + 1;
         string rankString = GetRankString(rank);
         entryTransform.Find("posText").GetComponent<Text>().text = rankString;

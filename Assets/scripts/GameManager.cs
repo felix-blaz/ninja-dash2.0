@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure only one instance of GameManager exists
+        // Making sure only 1 instance of GameManager exists
         if (instance == null)
         {
             instance = this;
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         // Sort the scores in descending order
         yourScore.scores.Sort((a, b) => b.CompareTo(a));
 
-        // Trim the list to the top 15 scores
+        // Only use the top 15 scores
         if (yourScore.scores.Count > scoreStorage)
         {
             yourScore.scores = yourScore.scores.GetRange(0, scoreStorage);
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
                 string json = PlayerPrefs.GetString("Scores");
                 Scores loadedScores = JsonUtility.FromJson<Scores>(json);
 
-                // Append the loaded scores to the existing list
+                
                 yourScore.scores.AddRange(loadedScores.scores);
             }
         }
@@ -80,12 +80,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // to deletes all scores in the list
     public void DeleteAllScores()
     {
-        // Clear the scores in the list
+       
         yourScore.scores.Clear();
 
-        // Save the updated scores (this will remove scores from PlayerPrefs)
+       
         SaveScores();
     }
 
